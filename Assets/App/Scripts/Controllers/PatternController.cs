@@ -117,15 +117,14 @@ public class PatternController : MonoBehaviour
         {
             if(!(_patternList[i] ==  _playerInputList[i]))
             {
-                Debug.Log("Game Over");
                 UIEvents.RaiseOnRestartMenuEvent(CurrentPatternSize);
                 _playerInputList.Clear();
                 break;
             }
             if(_playerInputList.Count == _currentPatternSize)
             {
-                Debug.Log("Win!");
                 IncreasePatternSize();
+                GetComponent<AudioSource>().Play();
                 _playerInputList.Clear();
             }
         }

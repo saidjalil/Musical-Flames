@@ -9,13 +9,18 @@ public class RestartMenuView : MonoBehaviour
 
      [SerializeField] private TMP_Text scoreText;
 
-    public void ExitAnimation()
+    public void ExitAnimation() // Exit animation to menu
     {
         animator.SetTrigger("Exit");
     }
 
-    public void SetScore(int score)
+    public void SetScore(int score) // showing score
     {
         scoreText.text = "Score:" + score;
+    }
+
+    public void PlayAudio() // Playing the lose audio
+    {
+        GetComponentInChildren<AudioSource>().Play();
     }
 }
