@@ -49,13 +49,16 @@ public class PatternController : MonoBehaviour
     {
         _currentPatternSize = _defaultPatternSize;
         _patternList.Clear();
+        _playerInputList.Clear();
         HandleInteraction(false);
     }
 
     private void IncreasePatternSize() // In case of winning, the game increases the pattern
     {
+        Debug.Log("Fuck");
         _currentPatternSize++;
         EnlargePattern();
+        _playerInputList.Clear();
         StartCoroutine(ShowPattern());
     }
     private void OnGeneratePatternEventHandler() // For generating a pattern
@@ -101,6 +104,7 @@ public class PatternController : MonoBehaviour
         {
         int x = i;
          _candles[i].onClick.AddListener(delegate {GetInput(x); });
+         Debug.Log(x);
         }
     }
 
@@ -113,23 +117,19 @@ public class PatternController : MonoBehaviour
 
     private void Compare() // Check for pattern is same as the input
     {
-        for(int i = 0; i < _playerInputList.Count; i++)
+        for(int i = 0; i < _playerInputList.Count ; i++)
         {
-            if(!(_patternList[i] ==  _playerInputList[i]))
+            if(_patternList[i] !=  _playerInputList[i])
             {
-                UIEvents.RaiseOnRestartMenuEvent(CurrentPatternSize);
-                _playerInputList.Clear();
-                break;
-            }
-            if(_playerInputList.Count == _currentPatternSize)
-            {
-                IncreasePatternSize();
-                GetComponent<AudioSource>().Play();
-                _playerInputList.Clear();
+            UIEvents.RaiseOnRestartMenuEvent(CurrentPatternSize);
+            return;
             }
         }
-        
-
+        if(_playerInputList.Count == _currentPatternSize)
+        {
+            IncreasePatternSize();
+            GetComponent<AudioSource>().Play();
+        }
     }
 
     
